@@ -11,38 +11,67 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.cg.exception.EmployeeException;
 import com.cg.model.Employee;
 import com.cg.service.IService;
 
 @RestController
-@Transactional
 public class EmployeeController {
 	@Autowired
 	private IService service;
 	
 	@RequestMapping(value="/create",method=RequestMethod.POST)
-	public Employee createEmployee(@RequestBody Employee employee) {
-		return service.createEmployee(employee);
+	public Employee createEmployee(@RequestBody Employee employee) throws EmployeeException{
+		try {
+			 service.createEmployee(employee);
+		} catch (EmployeeException e) {
+			throw e;
+		}
+		return employee;
 	}
 	
 	@RequestMapping(value="/update",method=RequestMethod.PUT)
-	public Employee updateEmployee(@RequestBody Employee employee ) {
-		return service.updateEmployee(employee);
+	public Employee updateEmployee(@RequestBody Employee employee ) throws EmployeeException {
+		Employee emp=null;
+		try {
+			emp= service.updateEmployee(employee);
+		} catch (EmployeeException e) {
+			throw e;
+		}
+		return emp;
 	}
 	
 	@RequestMapping(value="/delete",method=RequestMethod.DELETE)
-	public boolean deleteEmployee( String empId) {
-		return service.deleteEmployee(empId);
+	public boolean deleteEmployee( String empId) throws EmployeeException{
+		try {
+			 service.deleteEmployee(empId);
+		} catch (EmployeeException e) {
+			throw e;
+			
+		}
+		return true;
 	}
 	
 	@RequestMapping(value="/view",method=RequestMethod.GET)
-	public List<Employee> viewEmployee(Employee employee){
-		return service.viewEmployee(employee);
+	public List<Employee> viewEmployee(Employee employee) throws EmployeeException{
+		List<Employee> emp=null;
+		try {
+			 emp=service.viewEmployee(employee);
+		} catch (EmployeeException e) {
+			throw e;
+		}
+		return emp;
 	}
 	
 	@RequestMapping(value="/find",method=RequestMethod.GET)
-	public Optional<Employee> findEmployee(String empId){
-		return service.findEmployee(empId);
+	public Optional<Employee> findEmployee(String empId) throws EmployeeException{
+		Optional<Employee> emp=null;
+		try {
+			emp= service.findEmployee(empId);
+		} catch (EmployeeException e) {
+			throw e;
+		}
+		return emp;
 	}
 
 }

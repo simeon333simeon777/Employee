@@ -13,9 +13,9 @@ public interface IRepo extends JpaRepository<Employee, String> {
 	@Query("SELECT e FROM Employee e where e.empId=:id")
 	Employee getEmpId(@Param("id") String id);
 	
-	@Query("SELECT e FROM Employee e")
+	/*@Query("SELECT e FROM Employee e")
 	Employee viewEmployee();
-
+*/
 	
 	
 }
